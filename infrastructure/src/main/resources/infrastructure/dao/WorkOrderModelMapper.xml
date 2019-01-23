@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="infrastructure.dao.WorkOrderModelMapper">
+    <resultMap id="PhoneMap" type="domain.vo.Phone">
+    </resultMap>
+    <resultMap id="ContactMap" type="domain.vo.Contact">
+        <result column="contacts" property="name"/>
+        <!--<resultMap>-->
+        <association property="phone" resultMap="PhoneMap"/>
+        <!--</resultMap>-->
+    </resultMap>
+    <resultMap id="BaseResultMap" type="WorkOrderModel">
+        <association property="contact" resultMap="ContactMap"/>
+    </resultMap>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT *
+        FROM work_order
+        WHERE id=#{id}
+    </select>
+</mapper>

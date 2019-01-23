@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--<import resource="springDomain.xml"/>-->
+
+    <context:component-scan base-package="infrastructure"/>
+
+    <bean id="dataSource" class="org.apache.ibatis.datasource.pooled.PooledDataSource">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://192.168.100.113:3306/hk-nurse-sfs-bak"/>
+        <property name="username" value="root"/>
+        <property name="password" value="Hk3332222"/>
+    </bean>
+    
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations">
+            <array>
+                <value>classpath:infrastructure/dao/*.xml</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="addToConfig" value="true"/>
+        <property name="basePackage" value="infrastructure.dao"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
