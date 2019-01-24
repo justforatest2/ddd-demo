@@ -16,7 +16,7 @@ final public class Contact {
      */
     private Contact() {
         name = "";
-        phone = new Phone("13");
+        phone = null;
     }
 
     public Contact(String name, String phone) {

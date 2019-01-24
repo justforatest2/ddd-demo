@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="infrastructure.dao.ServiceWorkOrderModelMapper">
+    <resultMap id="BaseResultMap" type="ServiceWorkOrderModel">
+    </resultMap>
+    <resultMap id="TrainBaseResultMap" type="TrainServiceWorkOrderModel">
+    </resultMap>
+
+    <resultMap id="DispatchBaseResultMap" type="domain.module.workorder.model.IDispatch">
+        <discriminator javaType="int" column="type">
+            <case value="0" resultMap="BaseResultMap" />
+            <case value="2" resultMap="TrainBaseResultMap" />
+        </discriminator>
+    </resultMap>
+
+    <select id="findByWorkOrderId" resultMap="BaseResultMap">
+        SELECT *
+        FROM service_work_order
+        WHERE work_order_id=#{id}
+    </select>
+
+    <select id="findDispatchById" resultMap="DispatchBaseResultMap">
+        SELECT *
+        FROM service_work_order
+        WHERE id=#{id}
+    </select>
+</mapper>

@@ -11,6 +11,14 @@
     </resultMap>
     <resultMap id="BaseResultMap" type="WorkOrderModel">
         <association property="contact" resultMap="ContactMap"/>
+        <collection property="serviceWorkOrders" column="id"
+                    select="infrastructure.dao.ServiceWorkOrderModelMapper.findByWorkOrderId">
+        </collection>
+    </resultMap>
+
+    <resultMap id="SingleBaseResultMap" type="WorkOrderModel">
+        <association property="contact" resultMap="ContactMap"/>
+        <association property="serviceWorkOrder" javaType="domain.module.workorder.model.ServiceWorkOrderModel" columnPrefix="swo_"/>
     </resultMap>
 
     <select id="findById" resultMap="BaseResultMap">
@@ -18,4 +26,39 @@
         FROM work_order
         WHERE id=#{id}
     </select>
+
+    <sql id="selectFields">
+        <![CDATA[
+        wo.id, wo.code, wo.city_code, wo.contacts, wo.phone, wo.doorplate_no, wo.province, wo.province_area_id, wo.city,
+        wo.city_area_id, wo.district, wo.district_area_id, wo.address, wo.address_extra, wo.lng, wo.lat, wo.coords_level,
+        wo.area, wo.demand, wo.cancel_type, wo.remark, wo.source_type, wo.source_param, wo.service_duration,
+        wo.service_start_time, wo.service_end_time, wo.price_income, wo.quantity, wo.status, wo.user_id, wo.commented,
+        wo.sms_status, wo.exception_flag, wo.create_by, wo.create_time, wo.modify_by, wo.modify_time, wo.manager_member,
+        swo.id swo_id, swo.work_order_id swo_work_order_id, swo.code swo_code, swo.product_id swo_product_id,
+        swo.product_name swo_product_name, swo.service_time swo_service_time, swo.service_duration swo_service_duration,
+        swo.user_id swo_user_id, swo.price_income swo_price_income, swo.price_cost swo_price_cost, swo.type swo_type,
+        swo.status swo_status, swo.staff_reserve_no swo_staff_reserve_no, swo.ref_staff_id swo_ref_staff_id,
+        swo.fix_staff_status swo_fix_staff_status, swo.ref_staff_adjust_type swo_ref_staff_adjust_type,
+        swo.staff_id swo_staff_id, swo.depart_time swo_depart_time, swo.arrive_time swo_arrive_time,
+        swo.work_star_time swo_work_star_time, swo.work_end_time swo_work_end_time, swo.site_id swo_site_id,
+        swo.site_name swo_site_name, swo.sign_url swo_sign_url, swo.create_by swo_create_by,
+        swo.create_time swo_create_time, swo.modify_by swo_modify_by, swo.modify_time swo_modify_time
+        ]]>
+    </sql>
+
+    <select id="findByServiceWorkOrderId" resultMap="SingleBaseResultMap">
+        SELECT <include refid="selectFields"/>
+        FROM work_order wo
+        LEFT JOIN service_work_order swo ON swo.work_order_id=wo.id
+        WHERE swo.id=#{serviceWorkOrderId}
+    </select>
+
+    <select id="findByServiceWorkOrderIdAndType" resultMap="SingleBaseResultMap">
+        SELECT <include refid="selectFields"/>
+        FROM work_order wo
+        LEFT JOIN service_work_order swo ON swo.work_order_id=wo.id
+        WHERE swo.id=#{serviceWorkOrderId}
+        AND swo.type=#{type}
+    </select>
+
 </mapper>

@@ -99,6 +99,8 @@ public class WorkOrderModel {
 	 */
 	private Integer exceptionFlag = 0;
 
+	Integer status;
+
 	/**
 	 * 取消原因类型
 	 */
@@ -115,6 +117,12 @@ public class WorkOrderModel {
 
 	private String modifyBy;
 
+//	private List<ServiceWorkOrderModel> serviceWorkOrders;
+
+//	private List<TrainServiceWorkOrderModel> trainServiceWorkOrders;
+
+	private ServiceWorkOrderModel serviceWorkOrder;
+
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
@@ -123,8 +131,24 @@ public class WorkOrderModel {
 		this.modifyBy = modifyBy;
 	}
 
+	public ServiceWorkOrderModel getServiceWorkOrder() {
+		return serviceWorkOrder;
+	}
+
+	public void dispatch(Long staffId) {
+		status = 20;
+
+		serviceWorkOrder.dispatch(staffId);
+	}
+
+	public void depart() {
+		serviceWorkOrder.depart();	// 分而治之
+	}
+
 	@Override
 	public String toString() {
+//		serviceWorkOrders.get(0).type == 0 服务单 -> 已出发，服务中，空单
+//		serviceWorkOrders.get(0).type == 1 培训单 -> 调度，移除调度
 		return "WorkOrderModel{" +
 				"id=" + id +
 				", code='" + code + '\'' +
@@ -142,6 +166,8 @@ public class WorkOrderModel {
 				", exceptionFlag=" + exceptionFlag +
 				", createBy='" + createBy + '\'' +
 				", modifyBy='" + modifyBy + '\'' +
+//				", serviceWorkOrder=" + serviceWorkOrder +
+//				", serviceWorkOrders=" + serviceWorkOrders +
 				'}';
 	}
 }
