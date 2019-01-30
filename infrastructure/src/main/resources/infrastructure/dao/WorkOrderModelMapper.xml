@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="infrastructure.dao.WorkOrderModelMapper">
-    <resultMap id="PhoneMap" type="domain.vo.Phone">
+    <resultMap id="PhoneMap" type="domain.vo.Phone" autoMapping="true">
     </resultMap>
     <resultMap id="ContactMap" type="domain.vo.Contact">
         <result column="contacts" property="name"/>
@@ -9,11 +9,11 @@
         <association property="phone" resultMap="PhoneMap"/>
         <!--</resultMap>-->
     </resultMap>
-    <resultMap id="BaseResultMap" type="WorkOrderModel">
+    <resultMap id="BaseResultMap" type="WorkOrderModel" autoMapping="true">
         <association property="contact" resultMap="ContactMap"/>
-        <collection property="serviceWorkOrders" column="id"
-                    select="infrastructure.dao.ServiceWorkOrderModelMapper.findByWorkOrderId">
-        </collection>
+        <!--<collection property="serviceWorkOrders" column="id"-->
+                    <!--select="infrastructure.dao.ServiceWorkOrderModelMapper.findByWorkOrderId">-->
+        <!--</collection>-->
     </resultMap>
 
     <resultMap id="SingleBaseResultMap" type="WorkOrderModel">
@@ -60,5 +60,12 @@
         WHERE swo.id=#{serviceWorkOrderId}
         AND swo.type=#{type}
     </select>
+
+    <insert id="create">
+        INSERT INTO work_order
+        (schedule_date, staff_id, create_time, contacts, time_point_detail, status)
+        VALUES
+        (#{scheduleDate}, #{staffId}, NOW(), #{contact.name}, #{timePoint.timePointDetail}, 1)
+    </insert>
 
 </mapper>

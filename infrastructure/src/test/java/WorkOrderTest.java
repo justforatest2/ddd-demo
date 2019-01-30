@@ -1,4 +1,5 @@
 import domain.module.workorder.model.WorkOrderModel;
+import domain.module.workorder.repository.WorkOrderRepository;
 import infrastructure.dao.WorkOrderModelMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class WorkOrderTest {
 	@Autowired
 	private WorkOrderModelMapper workOrderModelMapper;
+	@Autowired
+	private WorkOrderRepository workOrderRepository;
 
 	@Test
 	public void testFind() {
@@ -68,9 +71,39 @@ public class WorkOrderTest {
 		// combo_plan_order combo_point_record 各自监听，进而去修改自己的状态
 
 
-
 //		ServiceWorkOrderModel serviceWorkOrderModel = workOrderModel.getServiceWorkOrder();
 //		serviceWorkOrderModel.dispatch();
+	}
+
+	@Test
+	public void testMongoFind() {
+		Long workOrderId = 1049748441046974464L;
+		WorkOrderModel workOrderModel = workOrderRepository.findById(workOrderId);
+//		workOrderModel.dispatch(20161234L);
+		System.out.println(workOrderModel);
+	}
+
+	@Test
+	public void testMongo() throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+//		Class<WorkOrderModel> workOrderModelClass = WorkOrderModel.class;
+//
+//		WorkOrderModel workOrderModel = workOrderModelClass.newInstance();
+//
+//		Field userId = workOrderModelClass.getDeclaredField("userId");
+//		userId.setAccessible(true);
+//		userId.set(workOrderModel, 111L);
+
+//		System.out.println(workOrderModel);
+
+//		->findAll();
+//
+//		List<Long> numberList = new ArrayList<>();
+//		numberList.add(1L);
+//		numberList.add(2L);
+//
+//		numberList.stream().filter(number -> {
+//			return true;
+//		});
 	}
 
 }

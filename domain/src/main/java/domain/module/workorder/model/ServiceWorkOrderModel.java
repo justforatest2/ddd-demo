@@ -132,7 +132,7 @@ public class ServiceWorkOrderModel {
     /**
      * MyBatis映射需要
      */
-    ServiceWorkOrderModel() {
+    private ServiceWorkOrderModel() {
     }
 
     void depart() {

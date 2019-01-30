@@ -166,7 +166,7 @@ public class WorkOrderModel {
 				", exceptionFlag=" + exceptionFlag +
 				", createBy='" + createBy + '\'' +
 				", modifyBy='" + modifyBy + '\'' +
-//				", serviceWorkOrder=" + serviceWorkOrder +
+				", serviceWorkOrder=" + serviceWorkOrder +
 //				", serviceWorkOrders=" + serviceWorkOrders +
 				'}';
 	}

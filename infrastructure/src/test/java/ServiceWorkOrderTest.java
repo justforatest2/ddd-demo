@@ -23,7 +23,7 @@ public class ServiceWorkOrderTest {
 
 		// 培训单ID 1125447853158694912
 		IDispatch dispatchOrderModel = serviceWorkOrderModelMapper.findDispatchById(1125447853158694912L);
-		dispatchOrderModel.dispatch();
+//		dispatchOrderModel.dispatch();
 //		System.out.println(dispatchOrderModel);
 	}
 }
