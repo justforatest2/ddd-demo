@@ -123,6 +123,10 @@ public class WorkOrderModel {
 
 	private ServiceWorkOrderModel serviceWorkOrder;
 
+	public Long getServiceWorkOrderId() {
+		return serviceWorkOrder.id;
+	}
+
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
@@ -136,6 +140,8 @@ public class WorkOrderModel {
 	}
 
 	public void dispatch(Long staffId) {
+		System.out.println("work order dispatch");
+
 		status = 20;
 
 		serviceWorkOrder.dispatch(staffId);

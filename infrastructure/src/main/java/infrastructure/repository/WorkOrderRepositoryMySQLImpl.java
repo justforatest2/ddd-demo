@@ -21,6 +21,11 @@ public class WorkOrderRepositoryMySQLImpl implements WorkOrderRepository {
 		return workOrderModelMapper.findById(id);
 	}
 
+	@Override
+	public WorkOrderModel findByServiceWorkOrderId(Long id) {
+		return workOrderModelMapper.findByServiceWorkOrderId(id);
+	}
+
 	// findFixedToDispatchByDate(日期范围)
 
 	// findToDispatchByDate(日期范围，是否固定单)
@@ -42,7 +47,10 @@ public class WorkOrderRepositoryMySQLImpl implements WorkOrderRepository {
 	}
 
 	public void update(WorkOrderModel workOrderModel) {
-//		workOrderModelMapper.update(workOrderModel);
-//		serviceWorkOrderModelMapper.update(workOrderModel.getServiceWorkOrder());
+		workOrderModelMapper.update(workOrderModel);
+//		if (true) {
+//			throw new RuntimeException("serviceWorkOrderModelMapper update fail");
+//		}
+		serviceWorkOrderModelMapper.update(workOrderModel.getServiceWorkOrder());
 	}
 }

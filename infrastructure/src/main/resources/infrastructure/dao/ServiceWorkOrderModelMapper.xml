@@ -24,4 +24,11 @@
         FROM service_work_order
         WHERE id=#{id}
     </select>
+
+    <update id="update">
+        UPDATE service_work_order
+        SET status=#{status}, staff_id=#{staffId},
+            modify_time=NOW(), modify_by=#{modifyBy}
+        WHERE id=#{id}
+    </update>
 </mapper>

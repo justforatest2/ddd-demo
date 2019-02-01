@@ -64,6 +64,11 @@ public class WorkOrderTest {
 		// 出发
 		workOrderModel.depart();
 
+//		workOrderModel.getServiceWorkOrderId();
+
+//		ServiceWorkOrderModel serviceWorkOrder = workOrderModel.getServiceWorkOrder();
+//		serviceWorkOrder.getId();
+
 //		workOrderModel.finish();
 
 		// 修改 combo_plan_order combo_point_record

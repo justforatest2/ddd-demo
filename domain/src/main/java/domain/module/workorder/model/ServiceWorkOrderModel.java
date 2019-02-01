@@ -135,7 +135,11 @@ public class ServiceWorkOrderModel {
     private ServiceWorkOrderModel() {
     }
 
-    void depart() {
+	public Long getId() {
+		return id;
+	}
+
+	void depart() {
         status = 60;
     }
 
@@ -144,10 +148,11 @@ public class ServiceWorkOrderModel {
 
     }
 
-	public void dispatch(Long staffId) {
-        status = 20;
+	void dispatch(Long staffId) {
+        System.out.println("service work order dispatch");
 
-//        System.out.println("service work order dispatch");
+        status = 20;
+        this.staffId = staffId;
     }
 
     @Override

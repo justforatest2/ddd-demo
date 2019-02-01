@@ -34,10 +34,20 @@ public class WorkOrderRepositoryMongoImpl implements WorkOrderRepository {
 		return null;
 	}
 
+	@Override
+	public WorkOrderModel findByServiceWorkOrderId(Long id) {
+		return null;
+	}
+
 //	findFixedToDispatchByDate
 
 	@Override
 	public void save(WorkOrderModel workOrderModel) {
+
+	}
+
+	@Override
+	public void update(WorkOrderModel workOrderModel) {
 
 	}
 

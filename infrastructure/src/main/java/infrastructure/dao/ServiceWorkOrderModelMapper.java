@@ -10,4 +10,6 @@ public interface ServiceWorkOrderModelMapper {
     List<ServiceWorkOrderModel> findByWorkOrderId(Long id);
 
     IDispatch findDispatchById(Long id);
+
+    void update(ServiceWorkOrderModel serviceWorkOrderModel);
 }

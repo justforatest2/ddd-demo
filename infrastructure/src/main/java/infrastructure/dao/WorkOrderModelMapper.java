@@ -9,4 +9,6 @@ public interface WorkOrderModelMapper {
     WorkOrderModel findByServiceWorkOrderId(Long serviceWorkOrderId);
 
     WorkOrderModel findByServiceWorkOrderIdAndType(Long serviceWorkOrderId, Integer type);
+
+    void update(WorkOrderModel workOrderModel);
 }

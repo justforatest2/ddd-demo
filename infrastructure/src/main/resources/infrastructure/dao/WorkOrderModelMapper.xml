@@ -68,4 +68,11 @@
         (#{scheduleDate}, #{staffId}, NOW(), #{contact.name}, #{timePoint.timePointDetail}, 1)
     </insert>
 
+    <update id="update">
+        UPDATE work_order
+        SET status=#{status},
+            commented=#{commented},
+            modify_time=NOW(), modify_by=#{modifyBy}
+        WHERE id=#{id}
+    </update>
 </mapper>
