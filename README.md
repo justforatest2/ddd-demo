@@ -58,7 +58,7 @@ DDD学习示例，循序渐进，每天一课。主要是技术层面（战术�
 * 不要以数据的角度去思考，以领域模型的角度去思考
 * 忘掉数据库，设想内存无限大，系统永不宕机
 * `信息专家模式`（`Information Expert`）：谁拥有信息（数据），就让谁做操作。数据和操作应放同一个地方
-* 值对象上添加加操作，如`DateTimeSpan`的日期`diff`操作，更内聚，更易于测试，也体现`分而治之`的思想
+* 值对象上添加操作，如`DateTimeSpan`的日期`diff`操作，更内聚，更易于测试，也体现`分而治之`的思想
 * 分层，六边形架构，尽可能保持domain层的纯粹（不涉及技术层，有时需要妥协，如空的构造方法、依赖注入等）
 * 其他层可以调用domain层，domain层绝对不能调用/依赖其他层
 
@@ -134,7 +134,7 @@ public void updateRefStaffAdjustType(Long workOrderId, Integer adjustType,HttpSe
 
 `autoMappingBehavior`：NONE, PARTIAL, FULL。
 
-`PARTIAL`则配置在`<resultMap>`中的属性才映射，`FULL`则没配置也映射（只要实体中存在这个属性就映射）
+设置为`PARTIAL`时，有配置在`<resultMap>`中的属性才映射，`FULL`则没配置也映射（只要实体中存在这个属性就映射）
 
 ```xml
 <settings>
@@ -146,15 +146,21 @@ public void updateRefStaffAdjustType(Long workOrderId, Integer adjustType,HttpSe
 
 需要用到`discriminator`（鉴别器）
 
+*以下纯粹是技术方面的示例，不要当作本课程的领域建模*
+
 ```java
 public interface IDispatch {
 	void dispatch();
 }
 ```
 
+`ServiceWorkOrderModel`和`TrainServiceWorkOrderModel`都实现了`IDispatch`接口
+
 Mapper配置
 
 ```xml
+<resultMap id="BaseResultMap" type="ServiceWorkOrderModel">
+</resultMap>
 <resultMap id="TrainBaseResultMap" type="TrainServiceWorkOrderModel">
 </resultMap>
 
@@ -206,7 +212,7 @@ Mapper配置
 
 * 需要多个实体/聚合进行操作，或者某个操作单独放在某个实体不合适
 * 每个服务只有一个方法，且方法应该是可以直接调用。明确依赖项，使业务逻辑的代码更清晰
-* 方法参数只接收领域层的对象，如值对象、Java自带的对象，不接收自定义的DTO
+* 方法参数只接收领域层的对象，如值对象、Java自带的对象等，不接收自定义的DTO
 * 计算类的操作
 
 应用服务（Application Service）
@@ -215,4 +221,46 @@ Mapper配置
 * 发邮件、发短信等非核心业务
 * 参数转化，如把普通的DTO请求对象转化成领域所需的参数
 * 可以看作是应用对外的接口(facade)
+* 一个服务类可以有多个方法，方法按业务使用场景来创建
+
+## 第六天
+
+补充一些其他方面的知识
+
+### 防腐层（Anticorruption Layer - ACL）
+
+封装对外部系统的交互调用
+
+[https://www.cnblogs.com/daxnet/archive/2012/08/30/2663092.html](https://www.cnblogs.com/daxnet/archive/2012/08/30/2663092.html)
+	
+* 库存调度
+* http通信？RPC（DUBBO）？
+* 参数格式？
+* 接口会变？会切换？
+
+### 模块
+
+如何分包，组织代码，尽量同一个实体/聚合的领域代码放一起
+
+### 实体的创建
+
+* Builder
+* 静态工厂方法
+* 直接new（适用于简单的值对象）
+* customer.createOrder() -> Order(uid=customer.id)
+* 参考《Effective Java中文版（原书第3版）》第1、2条
+* [http://www.importnew.com/6518.html](http://www.importnew.com/6518.html)
+
+### CQRS（Command Query Responsibility Segregation）命令查询职责分离
+	
+更广义读写分离
+
+* UI读与业务逻辑读分离（ReaderModel 和 WriterModel）
+* 数据库的读写分离（甚至是读写异构）
+* Event、Command
+* 事件溯源
+
+### 并发处理
+
+乐观锁，版本号控制
 

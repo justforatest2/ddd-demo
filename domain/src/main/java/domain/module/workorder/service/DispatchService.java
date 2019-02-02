@@ -1,10 +1,12 @@
 package domain.module.workorder.service;
 
+import domain.acl.StockService;
 import domain.module.workorder.model.WorkOrderModel;
 import domain.module.workorder.repository.WorkOrderRepository;
 
 public class DispatchService {
 	private WorkOrderRepository workOrderRepository;
+	private StockService stockService;
 
 	public DispatchService(WorkOrderRepository workOrderRepository) {
 		this.workOrderRepository = workOrderRepository;
@@ -17,6 +19,9 @@ public class DispatchService {
 
 		WorkOrderModel workOrderModel = workOrderRepository.findByServiceWorkOrderId(serviceWorkOrderId);
 		workOrderModel.dispatch(staffId);
+
+//		stockService.dispatch(staffId, LocalDateTime.now());
+
 		workOrderRepository.update(workOrderModel);
 
 		// comboPlanOrderRepository.findById();
